@@ -1,7 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import { useEffect, useState } from "react";
+import { getSections } from "./firebase";
+import "./App.css";
 
 function App() {
+  const [sections, setSections] = useState();
+  const getAllSections = () => {};
+  useEffect(() => {
+    try {
+      getSections().then((u) => {
+        console.log(u);
+        setSections(u);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [setSections]);
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +31,9 @@ function App() {
         >
           Learn React
         </a>
+        <ul>
+          {sections && sections.map((section) => <li>{section.name}</li>)}
+        </ul>
       </header>
     </div>
   );
