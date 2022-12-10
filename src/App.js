@@ -200,7 +200,7 @@ function App() {
                     </Grid>
                   ))}
               </Grid>
-              {swaps && swaps.length === 0 && (
+              {swaps.length === 0 && (
                 <Typography align="center">Sorry No Swaps founds</Typography>
               )}
             </Grid>
