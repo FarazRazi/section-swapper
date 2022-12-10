@@ -1,2 +1,2 @@
 # Section Swapper
-![https://section-swapper.web.app/](firebase)
+[Deploy](https://section-swapper.web.app/)
