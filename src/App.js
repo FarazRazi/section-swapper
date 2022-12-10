@@ -1,93 +1,21 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardHeader,
-  createTheme,
-  Grid,
-  TextField,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import logo from "./logo.svg";
 import { useEffect, useState } from "react";
+import { getSections } from "./firebase";
 import "./App.css";
-import { getSections, getSwaps, publishSwap } from "./firebase";
-const theme = {
-  palette: {
-    mode: "dark",
-  },
-  typography: {
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-  },
-};
-function ValidateEmail(input) {
-  var validRegex = /[a-z]+\d\d\d\d\d\d+@nu.edu.pk/;
-
-  if (input.match(validRegex)) {
-    // alert("Valid email address!");
-    return true;
-  } else {
-    alert("Invalid email address!");
-    return false;
-  }
-}
-function openMail(email) {
-  window.open(
-    `mailto:${email}?subject=Section Change Request&body=Can we talk about section change?`
-  );
-}
 
 function App() {
   const [sections, setSections] = useState();
-  const [swaps, setSwaps] = useState();
-  const [fromSection, setFromSection] = useState();
-  const [toSection, setToSection] = useState();
-  const [email, setEmail] = useState();
+  const getAllSections = () => {};
   useEffect(() => {
     try {
       getSections().then((u) => {
-        // console.log(u);
+        console.log(u);
         setSections(u);
       });
     } catch (error) {
       console.log(error.message);
     }
   }, [setSections]);
-  const askSwap = (e) => {
-    if (ValidateEmail(email) && fromSection && toSection) {
-      publishSwap({
-        email: email,
-        toSection: toSection,
-        fromSection: fromSection,
-      });
-      setEmail();
-      setFromSection();
-      setToSection();
-    }
-  };
-  useEffect(() => {
-    try {
-      if (fromSection && toSection)
-        getSwaps(fromSection, toSection).then((u) => {
-          // console.log(u);
-          setSwaps(u);
-        });
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, [fromSection, toSection]);
-
   return (
     <ThemeProvider theme={createTheme(theme)}>
       <div className="App">
